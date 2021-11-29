@@ -1,5 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { gql } from "graphql-tag";
+import styled from "styled-components";
+import Movie from "../components/Movie";
+
+const Header = styled.header`
+    width: 100%;
+    height: 45vh;
+    background-color: #9E1BB2;
+`;
 
 const GET_MOVIES = gql`
     {
@@ -15,10 +23,10 @@ const HomeComponent = () => {
     console.log(loading, error, data);
     return (
         <div>
+            <Header />
             {loading && <p>loading</p>}
-            {!loading && data.movies && 
-            data.movies.map(({ id }) => <p key={id}>{id}</p>)}
-        </div>   
+            {!loading && data?.movies?.map(({ id }) => <Movie key={id} id={id}/>)}
+        </div>
     )
 }
 
