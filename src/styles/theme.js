@@ -12,16 +12,17 @@ const color = {
     }
 }
 
-const fontSize = {
-    h1: "6.5rem",
-    h2: "3.5rem",
-    description: "2.8rem",
-    subDescription: "1.8rem"
+const font = {
+    h1: `font-size: 6.5rem;
+        font-weight: bold;`,
+    h2: `font-size: 3.5rem;`,
+    description: `font-size: 2.8rem`,
+    subDescription: `font-size: 1.8rem`
 }
 
 const theme = {
     color,
-    fontSize
+    font
 }
 
 export default theme;

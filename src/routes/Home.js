@@ -3,10 +3,32 @@ import { gql } from "graphql-tag";
 import styled from "styled-components";
 import Movie from "../components/Movie";
 
+const CardWrapper = styled.div`
+    width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 25%);
+    grid-column-gap: 24px;
+    grid-row-gap: 24px;
+    position: relative;
+    top: -50px;
+    overflow-wrap: break-word;
+    & > p {
+        ${ ({ theme }) => theme.font.h1 }
+    }
+`;
+
 const Header = styled.header`
     width: 100%;
     height: 45vh;
-    background-color: #9E1BB2;
+    background-color: ${ ({ theme }) => theme.color.primary.default };
+    color: ${ ({ theme }) => theme.color.text.white };
+    ${ ({ theme }) => theme.font.h1 };
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 `;
 
 const GET_MOVIES = gql`
@@ -14,20 +36,23 @@ const GET_MOVIES = gql`
         movies{
             id
             medium_cover_image
+            title
+            rating
         }
     }
-`
+`;
 
-const HomeComponent = () => {
-    const { loading, error, data } = useQuery(GET_MOVIES);
-    console.log(loading, error, data);
+const Home = () => {
+    const { loading, data } = useQuery(GET_MOVIES);
     return (
         <div>
-            <Header />
-            {loading && <p>loading</p>}
-            {!loading && data?.movies?.map(({ id }) => <Movie key={id} id={id}/>)}
+            <Header>영?화</Header>
+            <CardWrapper>
+                {loading && <p>loading</p>}
+                {!loading && data?.movies?.map(({ id, medium_cover_image }) => <Movie key={id} id={id} medium_cover_image={medium_cover_image} />)}
+            </CardWrapper>
         </div>
     )
 }
 
-export default HomeComponent;
+export default Home;
